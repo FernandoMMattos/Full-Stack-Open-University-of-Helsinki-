@@ -1,4 +1,5 @@
 const Stats = ({ good, neutral, bad, total }) => {
+  if (!total) return <p>No feedback given</p>
   return (
     <div>
       <p>good: {good}</p>
