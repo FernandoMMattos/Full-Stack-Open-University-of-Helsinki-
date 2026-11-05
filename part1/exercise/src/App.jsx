@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Button from "./components/Button";
+import Stats from "./components/Stats";
 
 const App = () => {
   const [good, setGood] = useState(0);
@@ -34,14 +35,7 @@ const App = () => {
         <Button onClick={handleBadFeedback} text="bad" />
       </div>
       <h2>Stats</h2>
-      <div>
-        <p>good: {good}</p>
-        <p>neutral: {neutral}</p>
-        <p>bad: {bad}</p>
-        <p>all: {total}</p>
-        <p>average: {(good + (-bad) / 3) / 10}</p>
-        <p>positive: {(good * 100 / total)}</p>
-      </div>
+      <Stats good={good} neutral={neutral} bad={bad} total={total} />
     </div>
   );
 };
