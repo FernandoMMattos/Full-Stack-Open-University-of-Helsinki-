@@ -3,17 +3,13 @@ import Content from "./Content.jsx";
 import Total from "./Total.jsx";
 
 const Course = ({ course }) => {
+  const total = course.parts.reduce((sum, part) => sum + part.exercises, 0);
+
   return (
     <div>
       <Header course={course.name} />
       <Content parts={course.parts} />
-      <Total
-        total={
-          course.parts[0].exercises +
-          course.parts[1].exercises +
-          course.parts[2].exercises
-        }
-      />
+      <Total total={total} />
     </div>
   );
 };
