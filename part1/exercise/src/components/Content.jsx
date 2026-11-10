@@ -1,10 +1,10 @@
 import Part from "./Part.jsx";
 
-const Content = (props) => (
+const Content = ({ parts }) => (
   <div>
-    <Part part={props.parts[0]} />
-    <Part part={props.parts[1]} />
-    <Part part={props.parts[2]} />
+    {parts.map((part) => (
+      <Part key={part.id} part={part} />
+    ))}
   </div>
 );
 
