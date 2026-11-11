@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
-import axios from "axios";
 import Filter from "./components/Filter";
 import PersonForm from "./components/PersonForm";
 import Persons from "./components/Persons";
+import PhonebookService from "./services/phonebook.js";
 
 const App = () => {
   const [persons, setPersons] = useState([]);
@@ -11,9 +11,9 @@ const App = () => {
   const [filter, setFilter] = useState("");
 
   useEffect(() => {
-    axios
-      .get("http://localhost:3001/persons")
-      .then((res) => setPersons(res.data));
+    PhonebookService.getAll().then((initialPhonebook) =>
+      setPersons(initialPhonebook),
+    );
   }, []);
 
   const addPerson = (event) => {
@@ -28,14 +28,17 @@ const App = () => {
       number: newNumber,
     };
 
-    setPersons(persons.concat(personObject));
-    setNewName("");
-    setNewNumber("");
+    PhonebookService.addPerson(personObject).then((returnedPhonebook) => {
+      setPersons(persons.concat(returnedPhonebook));
+      setNewName("");
+      setNewNumber("");
+    });
   };
 
   const personsToShow = persons.filter((person) =>
     person.name.toLowerCase().includes(filter.toLowerCase()),
   );
+  
   return (
     <div>
       <h2>Phonebook</h2>
