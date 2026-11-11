@@ -10,6 +10,10 @@ const App = () => {
   const [newNumber, setNewNumber] = useState("");
   const [filter, setFilter] = useState("");
 
+  const personsToShow = persons.filter((person) =>
+    person.name.toLowerCase().includes(filter.toLowerCase()),
+  );
+
   useEffect(() => {
     PhonebookService.getAll().then((initialPhonebook) =>
       setPersons(initialPhonebook),
@@ -35,10 +39,14 @@ const App = () => {
     });
   };
 
-  const personsToShow = persons.filter((person) =>
-    person.name.toLowerCase().includes(filter.toLowerCase()),
-  );
-  
+  const deletePerson = (person) => {
+    if (!window.confirm(`Delete ${person.name}?`)) return;
+
+    PhonebookService.deletePerson(person.id).then(() => {
+      setPersons(persons.filter((p) => p.id !== person.id));
+    });
+  };
+
   return (
     <div>
       <h2>Phonebook</h2>
@@ -54,7 +62,7 @@ const App = () => {
       />
 
       <h3>Numbers</h3>
-      <Persons personsToShow={personsToShow} />
+      <Persons personsToShow={personsToShow} deletePerson={deletePerson} />
     </div>
   );
 };
