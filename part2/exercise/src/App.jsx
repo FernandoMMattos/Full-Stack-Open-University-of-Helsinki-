@@ -23,8 +23,30 @@ const App = () => {
   const addPerson = (event) => {
     event.preventDefault();
 
-    if (persons.some((person) => person.name === newName)) {
-      return alert(`${newName} is already added to phonebook`);
+    const existingPerson = persons.find((person) => person.name === newName);
+
+    if (existingPerson) {
+      if (
+        !window.confirm(
+          `${newName} is already added to phonebook, replace old number with a new one?`,
+        )
+      )
+        return;
+
+      const updatedPerson = { ...existingPerson, number: newNumber };
+
+      PhonebookService.updatePerson(existingPerson.id, updatedPerson).then(
+        (returnedPerson) => {
+          setPersons(
+            persons.map((person) =>
+              person.id === existingPerson.id ? returnedPerson : person,
+            ),
+          );
+          setNewName("");
+          setNewNumber("");
+        },
+      );
+      return;
     }
 
     const personObject = {
