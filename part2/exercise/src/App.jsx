@@ -25,6 +25,11 @@ const App = () => {
 
   const addPerson = (event) => {
     event.preventDefault();
+    if (!newName || !newNumber) {
+      setStatus("error");
+      setMessage("Name or number field can't be empty.");
+      return
+    }
 
     const existingPerson = persons.find((person) => person.name === newName);
 
@@ -72,9 +77,17 @@ const App = () => {
   const deletePerson = (person) => {
     if (!window.confirm(`Delete ${person.name}?`)) return;
 
-    PhonebookService.deletePerson(person.id).then(() => {
-      setPersons(persons.filter((p) => p.id !== person.id));
-    });
+    PhonebookService.deletePerson(person.id)
+      .then(() => {
+        setPersons(persons.filter((p) => p.id !== person.id));
+      })
+      .catch((error) => {
+        setStatus("error");
+        setMessage(
+          `Information of ${person.name} has already been removed from the server`,
+        );
+        setPersons(persons.filter((p) => p.id !== person.id));
+      });
   };
 
   return (
