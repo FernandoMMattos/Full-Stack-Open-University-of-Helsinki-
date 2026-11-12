@@ -109,3 +109,24 @@ code {
   padding: 4px 8px;
   background: var(--code-bg);
 }
+
+.notification {
+  --notification-color: grey;
+
+  color: var(--notification-color);
+  background: lightgrey;
+  font-size: 20px;
+  border-style: solid;
+  border-radius: 5px;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+.notification.success {
+  --notification-color: green
+}
+
+.notification.error {
+  --notification-color: red;
+
+}
