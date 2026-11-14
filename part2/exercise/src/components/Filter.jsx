@@ -1,8 +1,8 @@
-const Filter = ({ setFilter }) => {
+const Filter = ({ filter, setFilter }) => {
   return (
     <div>
-      filter shown with
-      <input onChange={(e) => setFilter(e.target.value)} />
+      find countries
+      <input value={filter} onChange={(e) => setFilter(e.target.value)} />
     </div>
   );
 };
