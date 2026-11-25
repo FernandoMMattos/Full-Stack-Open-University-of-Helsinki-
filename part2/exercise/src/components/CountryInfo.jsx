@@ -27,7 +27,7 @@ const CountryInfo = ({ country }) => {
       <img src={country.flags.png} alt={`Flag of ${country.name.common}`} />
 
       <h3>Weather in {country.capital?.[0] ?? country.name.common}</h3>
-      {weather ? (
+      {weather ? ( 
         <>
           <div>Temperature: {weather.main.temp.toFixed(1)} °C</div>
           <img
